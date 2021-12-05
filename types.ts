@@ -35,3 +35,68 @@ function doStuff(arg: Foo | Bar) {
     arg.foo;
   }
 }
+
+/**
+ * 类型守卫 in
+ */
+interface A {
+  x: number;
+  x1: string;
+}
+
+interface B {
+  y: number;
+  y1: string;
+}
+
+function doStuff2(q: A | B) {
+  if ('x' in q) {
+    q.x1;
+  } else {
+    q.y1;
+  }
+}
+
+/**
+ * 类型守卫: 字面量类型 ( === !== == !=)
+ */
+type State = 'yes' | 'no' | 'unknown';
+function logOutStatee(state: State) {
+  if (state === 'yes') {
+    console.log('yes');
+  } else if (state === 'no') {
+    console.log('no');
+  } else {
+    console.log('unknown');
+  }
+}
+
+type Foo1 = {
+  kind: 'foo';
+  foo: number;
+};
+
+type Bar1 = {
+  kind: 'bar';
+  bar: number;
+};
+
+function doStuff3(arg: Foo1 | Bar1) {
+  if (arg.kind === 'foo') {
+    arg.foo;
+  } else {
+    arg.bar;
+  }
+}
+
+/**
+ * 自定义类型守护
+ */
+function isString(data: any): data is string {
+  return typeof data === 'string';
+}
+function doSome1(data: any) {
+  if (isString(data)) {
+    data.split(',');
+  }
+}
